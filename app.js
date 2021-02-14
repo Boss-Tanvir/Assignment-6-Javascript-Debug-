@@ -25,12 +25,17 @@ const showImages = (images) => {
     div.className = 'col-lg-3 col-md-4 col-xs-6 img-item mb-2';
     div.innerHTML = ` <img class="img-fluid img-thumbnail" onclick=selectItem(event,"${image.webformatURL}") src="${image.webformatURL}" alt="${image.tags}">`;
     gallery.appendChild(div)
+   
   })
-
+  toggleSpiner()
 }
 
 const getImages = (query) => {
-  fetch(`https://pixabay.com/api/?key=${KEY}=${query}&image_type=photo&pretty=true`)
+  
+  let url = `https://pixabay.com/api/?key=${KEY}=${query}&image_type=photo&pretty=true`
+
+  toggleSpiner()
+  fetch(url)
     .then(response => response.json())
     .then(data => showImages(data.hits))
     .catch(err => console.log(err))
@@ -56,6 +61,7 @@ const createSlider = () => {
     alert('Select at least 2 image.')
     return;
   }
+  
   // crate slider previous next area
   sliderContainer.innerHTML = '';
   const prevNext = document.createElement('div');
@@ -118,6 +124,7 @@ searchBtn.addEventListener('click', function () {
   const search = document.getElementById('search');
   getImages(search.value)
   sliders.length = 0;
+  
 })
 
 sliderBtn.addEventListener('click', function () {
@@ -130,3 +137,18 @@ document.getElementById('search').addEventListener('keypress', function(event){
       searchBtn.click()
     }
 })
+
+
+
+let toggleSpiner = () => {
+  let spiner = document.getElementById('loding_spiner')
+  let allImages = document.getElementById('all_images')
+  // console.log(spiner);
+  
+    spiner.classList.toggle('d-none')
+    allImages.classList.toggle('d-none')
+
+  
+  
+ 
+}
