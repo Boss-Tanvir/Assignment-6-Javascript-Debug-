@@ -138,6 +138,11 @@ document.getElementById('search').addEventListener('keypress', function(event){
     }
 })
 
+document.getElementById('duration').addEventListener('keypress', function(event){
+  if (event.key === 'Enter') {
+    sliderBtn.click()
+  }
+})
 
 
 let toggleSpiner = () => {
